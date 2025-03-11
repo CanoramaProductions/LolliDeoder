@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alternating Colors Random Word Generator</title>
+    <title>LolliDeo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
             background-color: white;
             color: black;
         }
@@ -18,14 +17,53 @@
             font-weight: bold;
             transition: transform 0.2s ease-in-out;
         }
+        #warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            z-index: 10;
+        }
+        #continue-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #continue-btn:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Random Word Generator</h1>
+    <div id="warning">
+        <p>⚠️ **Epilepsy Warning** ⚠️</p>
+        <p>This site contains flashing text and colors. If you have a history of epilepsy, please proceed with caution.</p>
+        <button id="continue-btn">Continue</button>
+    </div>
+
+    <h1>LolliDeo</h1>
     <p id="word">Lollipop</p>
 
     <script>
+        // Wait for "Continue" button click to show the main content
+        document.getElementById('continue-btn').onclick = function() {
+            document.getElementById('warning').style.display = 'none';
+            document.body.style.backgroundColor = 'white'; // Ensure the main body is white when starting
+            startWordGenerator();
+        };
+
         const words = ["Lollipop", "Deodorant"];
         let interval = 2000; // Start at 2 seconds
         let minInterval = 200; // Minimum interval limit (slower speed-up)
@@ -34,52 +72,54 @@
         let lastWord = ""; // Track the previous word
         let repeatCount = 0; // Count how many times the same word appears in a row
 
-        function generateWord() {
-            const wordElement = document.getElementById("word");
-            const body = document.body;
-            let randomWord;
+        function startWordGenerator() {
+            function generateWord() {
+                const wordElement = document.getElementById("word");
+                const body = document.body;
+                let randomWord;
 
-            // Ensure the same word doesn't repeat more than twice
-            do {
-                randomWord = words[Math.floor(Math.random() * words.length)];
-            } while (randomWord === lastWord && repeatCount >= 4);
+                // Ensure the same word doesn't repeat more than twice
+                do {
+                    randomWord = words[Math.floor(Math.random() * words.length)];
+                } while (randomWord === lastWord && repeatCount >= 2);
 
-            // Update repeat count
-            if (randomWord === lastWord) {
-                repeatCount++;
-            } else {
-                repeatCount = 1;
+                // Update repeat count
+                if (randomWord === lastWord) {
+                    repeatCount++;
+                } else {
+                    repeatCount = 1;
+                }
+                lastWord = randomWord;
+
+                wordElement.innerText = randomWord;
+
+                // Toggle text and background colors
+                if (isBlackText) {
+                    body.style.backgroundColor = "black";
+                    body.style.color = "white";
+                } else {
+                    body.style.backgroundColor = "white";
+                    body.style.color = "black";
+                }
+
+                isBlackText = !isBlackText; // Flip the state
+
+                // Text grow effect
+                wordElement.style.transform = "scale(1.2)";
+                setTimeout(() => {
+                    wordElement.style.transform = "scale(1)";
+                }, 100);
+
+                // Decrease interval but at a slower pace
+                if (interval > minInterval) {
+                    interval *= decreaseRate;
+                }
+
+                setTimeout(generateWord, interval);
             }
-            lastWord = randomWord;
 
-            wordElement.innerText = randomWord;
-
-            // Toggle text and background colors
-            if (isBlackText) {
-                body.style.backgroundColor = "black";
-                body.style.color = "white";
-            } else {
-                body.style.backgroundColor = "white";
-                body.style.color = "black";
-            }
-
-            isBlackText = !isBlackText; // Flip the state
-
-            // Text grow effect
-            wordElement.style.transform = "scale(1.2)";
-            setTimeout(() => {
-                wordElement.style.transform = "scale(1)";
-            }, 100);
-
-            // Decrease interval but at a slower pace
-            if (interval > minInterval) {
-                interval *= decreaseRate;
-            }
-
-            setTimeout(generateWord, interval);
+            setTimeout(generateWord, interval); // Start the loop
         }
-
-        setTimeout(generateWord, interval); // Start the loop
     </script>
 
 </body>
