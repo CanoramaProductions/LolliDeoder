@@ -9,13 +9,14 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
-            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
             background-color: white;
             color: black;
         }
         #word {
             font-size: 2em;
             font-weight: bold;
+            transition: transform 0.2s ease-in-out;
         }
     </style>
 </head>
@@ -27,8 +28,8 @@
     <script>
         const words = ["Lollipop", "Deodorant"];
         let interval = 2000; // Start at 2 seconds
-        let minInterval = 100; // Minimum interval limit
-        let decreaseRate = 0.95; // How much the interval decreases each step
+        let minInterval = 200; // Minimum interval limit (slower speed-up)
+        let decreaseRate = 0.98; // Slows down the acceleration
         let isBlackText = true; // Track the current state
 
         function generateWord() {
@@ -49,8 +50,15 @@
 
             isBlackText = !isBlackText; // Flip the state
 
+            // Text grow effect
+            wordElement.style.transform = "scale(1.2)";
+            setTimeout(() => {
+                wordElement.style.transform = "scale(1)";
+            }, 100);
+
+            // Decrease interval but at a slower pace
             if (interval > minInterval) {
-                interval *= decreaseRate; // Decrease interval
+                interval *= decreaseRate;
             }
 
             setTimeout(generateWord, interval);
