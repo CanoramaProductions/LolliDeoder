@@ -42,7 +42,7 @@
             // Ensure the same word doesn't repeat more than twice
             do {
                 randomWord = words[Math.floor(Math.random() * words.length)];
-            } while (randomWord === lastWord && repeatCount >= 2);
+            } while (randomWord === lastWord && repeatCount >= 4);
 
             // Update repeat count
             if (randomWord === lastWord) {
