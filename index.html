@@ -13,7 +13,7 @@
         #word {
             font-size: 2em;
             font-weight: bold;
-            transition: color 0.5s ease-in-out; /* Smooth fading effect */
+            transition: color 0.8s ease-in-out; /* Smooth but noticeable fade */
         }
     </style>
 </head>
@@ -34,17 +34,13 @@
 
             wordElement.innerText = randomWord;
 
-            // Change text color based on the word
-            if (randomWord === "Lollipop") {
-                wordElement.style.color = "green";
-            } else {
-                wordElement.style.color = "red";
-            }
+            // Set initial color
+            wordElement.style.color = randomWord === "Lollipop" ? "green" : "red";
 
-            // Fade back to black after a short delay
+            // Fade to black over time
             setTimeout(() => {
                 wordElement.style.color = "black";
-            }, 200); // Quickly fades after 200ms
+            }, 300); // Noticeable fade time
 
             if (interval > minInterval) {
                 interval *= decreaseRate; // Decrease interval
