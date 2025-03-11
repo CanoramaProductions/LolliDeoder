@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speeding Random Word Generator</title>
+    <title>Alternating Colors Random Word Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+            background-color: white;
+            color: black;
         }
         #word {
             font-size: 2em;
             font-weight: bold;
-            transition: color 1s ease-in-out; /* Smooth fading effect */
         }
     </style>
 </head>
@@ -27,24 +29,25 @@
         let interval = 2000; // Start at 2 seconds
         let minInterval = 100; // Minimum interval limit
         let decreaseRate = 0.95; // How much the interval decreases each step
+        let isBlackText = true; // Track the current state
 
         function generateWord() {
             const wordElement = document.getElementById("word");
+            const body = document.body;
             const randomWord = words[Math.floor(Math.random() * words.length)];
-
-            // Instantly set the color
-            if (randomWord === "Lollipop") {
-                wordElement.style.color = "green";
-            } else {
-                wordElement.style.color = "red";
-            }
 
             wordElement.innerText = randomWord;
 
-            // Fade to black over time
-            setTimeout(() => {
-                wordElement.style.color = "black";
-            }, 50); // Starts fading almost immediately
+            // Toggle text and background colors
+            if (isBlackText) {
+                body.style.backgroundColor = "black";
+                body.style.color = "white";
+            } else {
+                body.style.backgroundColor = "white";
+                body.style.color = "black";
+            }
+
+            isBlackText = !isBlackText; // Flip the state
 
             if (interval > minInterval) {
                 interval *= decreaseRate; // Decrease interval
