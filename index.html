@@ -13,7 +13,7 @@
         #word {
             font-size: 2em;
             font-weight: bold;
-            transition: color 0.2s ease-in-out;
+            transition: color 0.5s ease-in-out; /* Smooth fading effect */
         }
     </style>
 </head>
@@ -40,6 +40,11 @@
             } else {
                 wordElement.style.color = "red";
             }
+
+            // Fade back to black after a short delay
+            setTimeout(() => {
+                wordElement.style.color = "black";
+            }, 200); // Quickly fades after 200ms
 
             if (interval > minInterval) {
                 interval *= decreaseRate; // Decrease interval
