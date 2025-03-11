@@ -63,7 +63,6 @@
     <!-- Image at the top of the page -->
     <img id="header-image" src="IMG_0332.png" alt="Lolli/Deo Image">
 
-    <h1>Lolli/Deo</h1>
     <p id="word">Lollipop</p>
 
     <script>
@@ -86,12 +85,13 @@
             function generateWord() {
                 const wordElement = document.getElementById("word");
                 const body = document.body;
+                const headerImage = document.getElementById("header-image");
                 let randomWord;
 
                 // Ensure the same word doesn't repeat more than twice
                 do {
                     randomWord = words[Math.floor(Math.random() * words.length)];
-                } while (randomWord === lastWord && repeatCount >= 2);
+                } while (randomWord === lastWord && repeatCount >= 4);
 
                 // Update repeat count
                 if (randomWord === lastWord) {
@@ -107,9 +107,11 @@
                 if (isBlackText) {
                     body.style.backgroundColor = "black";
                     body.style.color = "white";
+                    headerImage.src = "IMG_0333.png"; // Change image to IMG_0333.png
                 } else {
                     body.style.backgroundColor = "white";
                     body.style.color = "black";
+                    headerImage.src = "IMG_0332.png"; // Change image to IMG_0332.png
                 }
 
                 isBlackText = !isBlackText; // Flip the state
