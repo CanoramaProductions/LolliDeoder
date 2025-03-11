@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speeding Random Word Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #word {
+            font-size: 2em;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Random Word Generator</h1>
+    <p id="word">Lollipop</p>
+
+    <script>
+        const words = ["Lollipop", "Deodorant"];
+        let interval = 2000; // Start at 2 seconds
+        let minInterval = 100; // Minimum interval limit
+        let decreaseRate = 0.95; // How much the interval decreases each step
+
+        function generateWord() {
+            const randomWord = words[Math.floor(Math.random() * words.length)];
+            document.getElementById("word").innerText = randomWord;
+
+            if (interval > minInterval) {
+                interval *= decreaseRate; // Decrease interval
+            }
+
+            setTimeout(generateWord, interval);
+        }
+
+        setTimeout(generateWord, interval); // Start the loop
+    </script>
+
+</body>
+</html>
