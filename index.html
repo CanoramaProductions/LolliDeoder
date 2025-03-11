@@ -12,7 +12,8 @@
         }
         #word {
             font-size: 2em;
-            margin: 20px;
+            font-weight: bold;
+            transition: color 0.2s ease-in-out;
         }
     </style>
 </head>
@@ -28,8 +29,17 @@
         let decreaseRate = 0.95; // How much the interval decreases each step
 
         function generateWord() {
+            const wordElement = document.getElementById("word");
             const randomWord = words[Math.floor(Math.random() * words.length)];
-            document.getElementById("word").innerText = randomWord;
+
+            wordElement.innerText = randomWord;
+
+            // Change text color based on the word
+            if (randomWord === "Lollipop") {
+                wordElement.style.color = "green";
+            } else {
+                wordElement.style.color = "red";
+            }
 
             if (interval > minInterval) {
                 interval *= decreaseRate; // Decrease interval
