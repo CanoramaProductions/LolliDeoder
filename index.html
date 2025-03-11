@@ -31,11 +31,26 @@
         let minInterval = 200; // Minimum interval limit (slower speed-up)
         let decreaseRate = 0.98; // Slows down the acceleration
         let isBlackText = true; // Track the current state
+        let lastWord = ""; // Track the previous word
+        let repeatCount = 0; // Count how many times the same word appears in a row
 
         function generateWord() {
             const wordElement = document.getElementById("word");
             const body = document.body;
-            const randomWord = words[Math.floor(Math.random() * words.length)];
+            let randomWord;
+
+            // Ensure the same word doesn't repeat more than twice
+            do {
+                randomWord = words[Math.floor(Math.random() * words.length)];
+            } while (randomWord === lastWord && repeatCount >= 2);
+
+            // Update repeat count
+            if (randomWord === lastWord) {
+                repeatCount++;
+            } else {
+                repeatCount = 1;
+            }
+            lastWord = randomWord;
 
             wordElement.innerText = randomWord;
 
